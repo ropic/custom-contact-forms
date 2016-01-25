@@ -584,6 +584,13 @@ class CCF_Form_Manager {
 						<label for="ccf-field-placeholder"><?php esc_html_e( 'Placeholder Text:', 'custom-contact-forms' ); ?></label>
 						<input id="ccf-field-placeholder" class="field-placeholder" type="text" value="{{ field.placeholder }}">
 					</div>
+					<div>
+						<label for="ccf-field-conditionals"><?php esc_html_e( 'Enable Conditional Logic:', 'custom-contact-forms' ); ?></label>
+						<select id="ccf-field-conditionals" class="field-conditionals">
+							<option value="0"><?php esc_html_e( 'No', 'custom-contact-forms' ); ?></option>
+							<option value="1" <# if ( field.required ) { #>selected="selected"<# } #>><?php esc_html_e( 'Yes', 'custom-contact-forms' ); ?></option>
+						</select>
+					</div>
 				</div>
 			</div>
 		</script>

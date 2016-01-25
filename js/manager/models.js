@@ -57,6 +57,22 @@
 		return this;
 	};
 
+	wp.ccf.models.FieldCondition = wp.ccf.models.FieldCondition || Backbone.Model.extend(
+		{
+			defaults: {
+				field: '',
+				compare: 'is',
+				value: ''
+			},
+
+			decode: function() {
+				return _modelDecode.call( this, [] );
+			},
+
+			set: _modelSet
+		}
+	);
+
 	wp.ccf.models.FieldChoice = wp.ccf.models.FieldChoice || Backbone.Model.extend(
 		{
 			defaults: {
@@ -414,10 +430,29 @@
 			idAttribute: 'id',
 
 			defaults: {
-				id: null
+				id: null,
+				conditionals: false,
+				conditionalType: 'show',
+				conditionalFieldsRequired: 'all',
+				conditionals: new wp.ccf.collections.FieldConditionals()
 			},
 
 			set: _modelSet,
+
+			initialize: function( attributes ) {
+				if ( typeof attributes === 'object' && attributes.conditionals ) {
+					var conditionals = [];
+
+					_.each( attributes.conditionals, function( conditional ) {
+						var conditionalModel = new wp.ccf.models.FieldCondition( conditional );
+						conditionalModel.decode();
+
+						conditionals.push( conditionalModel );
+					});
+
+					this.set( 'conditionals', new wp.ccf.collections.FieldConditionals( conditionals ) );
+				}
+			},
 
 			required: function() {
 				return [ 'slug' ];

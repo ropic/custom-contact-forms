@@ -112,4 +112,10 @@
 		}
 	);
 
+	wp.ccf.collections.FieldConditions = wp.ccf.collections.FieldConditions || Backbone.Collection.extend(
+		{
+			model: wp.ccf.models.FieldCondition
+		}
+	);
+
 })( jQuery, Backbone, _, ccfSettings );

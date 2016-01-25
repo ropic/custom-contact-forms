@@ -679,6 +679,7 @@
 				this.model.set( 'placeholder', this.el.querySelectorAll( '.field-placeholder' )[0].value );
 				this.model.set( 'className', this.el.querySelectorAll( '.field-class-name' )[0].value );
 				this.model.set( 'required', ( this.el.querySelectorAll( '.field-required' )[0].value == 1 ) ? true : false  );
+				this.model.set( 'conditionals', ( this.el.querySelectorAll( '.field-conditonals' )[0].value == 1 ) ? true : false );
 
 				return this;
 			}
@@ -706,6 +707,7 @@
 				this.model.set( 'required', ( this.el.querySelectorAll( '.field-required' )[0].value == 1 ) ? true : false  );
 				this.model.set( 'fileExtensions', this.el.querySelectorAll( '.field-file-extensions' )[0].value );
 				this.model.set( 'maxFileSize', this.el.querySelectorAll( '.field-max-file-size' )[0].value );
+				this.model.set( 'conditionals', ( this.el.querySelectorAll( '.field-conditonals' )[0].value == 1 ) ? true : false );
 
 				return this;
 			}
@@ -731,6 +733,7 @@
 				this.model.set( 'siteKey', this.el.querySelectorAll( '.field-site-key' )[0].value );
 				this.model.set( 'secretKey', this.el.querySelectorAll( '.field-secret-key' )[0].value );
 				this.model.set( 'className', this.el.querySelectorAll( '.field-class-name' )[0].value );
+				this.model.set( 'conditionals', ( this.el.querySelectorAll( '.field-conditonals' )[0].value == 1 ) ? true : false );
 
 				return this;
 			}
@@ -754,6 +757,7 @@
 				this.model.set( 'heading', this.el.querySelectorAll( '.field-heading' )[0].value );
 				this.model.set( 'subheading', this.el.querySelectorAll( '.field-subheading' )[0].value );
 				this.model.set( 'className', this.el.querySelectorAll( '.field-class-name' )[0].value );
+				this.model.set( 'conditionals', ( this.el.querySelectorAll( '.field-conditonals' )[0].value == 1 ) ? true : false );
 
 				return this;
 			}
@@ -776,6 +780,7 @@
 
 				this.model.set( 'html', this.el.querySelectorAll( '.field-html' )[0].value );
 				this.model.set( 'className', this.el.querySelectorAll( '.field-class-name' )[0].value );
+				this.model.set( 'conditionals', ( this.el.querySelectorAll( '.field-conditonals' )[0].value == 1 ) ? true : false );
 
 				return this;
 			}
@@ -799,6 +804,7 @@
 				this.model.set( 'placeholder', this.el.querySelectorAll( '.field-placeholder' )[0].value );
 				this.model.set( 'className', this.el.querySelectorAll( '.field-class-name' )[0].value );
 				this.model.set( 'required', ( this.el.querySelectorAll( '.field-required' )[0].value == 1 ) ? true : false  );
+				this.model.set( 'conditionals', ( this.el.querySelectorAll( '.field-conditonals' )[0].value == 1 ) ? true : false );
 
 				return this;
 			}
@@ -837,6 +843,7 @@
 				this.model.set( 'slug', this.el.querySelectorAll( '.field-slug' )[0].value );
 				this.model.set( 'label', this.el.querySelectorAll( '.field-label' )[0].value );
 				this.model.set( 'description', this.el.querySelectorAll( '.field-description' )[0].value );
+				this.model.set( 'conditionals', ( this.el.querySelectorAll( '.field-conditonals' )[0].value == 1 ) ? true : false );
 
 				var value = this.el.querySelectorAll( '.field-value' );
 				if ( value.length > 0 ) {
@@ -883,6 +890,7 @@
 				this.model.set( 'description', this.el.querySelectorAll( '.field-description' )[0].value );
 				this.model.set( 'className', this.el.querySelectorAll( '.field-class-name' )[0].value );
 				this.model.set( 'required', ( this.el.querySelectorAll( '.field-required' )[0].value == 1 ) ? true : false  );
+				this.model.set( 'conditionals', ( this.el.querySelectorAll( '.field-conditonals' )[0].value == 1 ) ? true : false );
 
 				return this;
 			}
@@ -906,6 +914,7 @@
 				this.model.set( 'placeholder', this.el.querySelectorAll( '.field-placeholder' )[0].value );
 				this.model.set( 'className', this.el.querySelectorAll( '.field-class-name' )[0].value );
 				this.model.set( 'required', ( this.el.querySelectorAll( '.field-required' )[0].value == 1 ) ? true : false  );
+				this.model.set( 'conditionals', ( this.el.querySelectorAll( '.field-conditonals' )[0].value == 1 ) ? true : false );
 
 				return this;
 			}
@@ -930,6 +939,7 @@
 				this.model.set( 'phoneFormat', this.el.querySelectorAll( '.field-phone-format' )[0].value );
 				this.model.set( 'className', this.el.querySelectorAll( '.field-class-name' )[0].value );
 				this.model.set( 'required', ( this.el.querySelectorAll( '.field-required' )[0].value == 1 ) ? true : false  );
+				this.model.set( 'conditionals', ( this.el.querySelectorAll( '.field-conditonals' )[0].value == 1 ) ? true : false );
 
 				return this;
 			}
@@ -952,6 +962,7 @@
 				this.model.set( 'addressType', this.el.querySelectorAll( '.field-address-type' )[0].value );
 				this.model.set( 'className', this.el.querySelectorAll( '.field-class-name' )[0].value );
 				this.model.set( 'required', ( this.el.querySelectorAll( '.field-required' )[0].value == 1 ) ? true : false  );
+				this.model.set( 'conditionals', ( this.el.querySelectorAll( '.field-conditonals' )[0].value == 1 ) ? true : false );
 
 				return this;
 			}
@@ -971,6 +982,7 @@
 				this.model.set( 'slug', this.el.querySelectorAll( '.field-slug' )[0].value );
 				this.model.set( 'label', this.el.querySelectorAll( '.field-label' )[0].value );
 				this.model.set( 'description', this.el.querySelectorAll( '.field-description' )[0].value );
+				this.model.set( 'conditionals', ( this.el.querySelectorAll( '.field-conditonals' )[0].value == 1 ) ? true : false );
 
 				var value = this.el.querySelectorAll( '.field-value' );
 				if ( value.length ) {
@@ -1026,6 +1038,7 @@
 				this.model.set( 'description', this.el.querySelectorAll( '.field-description' )[0].value );
 				this.model.set( 'className', this.el.querySelectorAll( '.field-class-name' )[0].value );
 				this.model.set( 'required', ( this.el.querySelectorAll( '.field-required' )[0].value == 1 ) ? true : false  );
+				this.model.set( 'conditionals', ( this.el.querySelectorAll( '.field-conditonals' )[0].value == 1 ) ? true : false );
 
 
 				var choices = this.el.querySelectorAll( '.repeatable-choices' )[0].querySelectorAll( '.choice' );
