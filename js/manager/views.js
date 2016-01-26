@@ -53,6 +53,47 @@
 
 			},
 
+			updateFields: function() {
+				var conditionalFields = this.el.querySelectorAll( '.conditional-field' )[0];
+				conditionalFields.innerHTML = '';
+				conditionalFields.disabled = false;
+
+				var fieldsAdded = 0;
+
+				var conditionalField = this.model.get( 'field' ),
+					option;
+
+				if ( this.collection.length >= 1 ) {
+					option = document.createElement( 'option' );
+					option.innerHTML = ccfSettings.chooseFormField;
+					option.value = '';
+
+					conditionalFields.appendChild( option );
+
+					this.collection.each( function( field ) {
+						option = document.createElement( 'option' );
+						option.innerHTML = field.get( 'slug' );
+						option.value = field.get( 'slug' );
+
+						if ( field.get( 'slug' ) === conditionalField ) {
+							option.selected = true;
+						}
+
+						conditionalFields.appendChild( option );
+
+						fieldsAdded++;
+					});
+				}
+
+				if ( 0 === fieldsAdded ) {
+					option = document.createElement( 'option' );
+					option.innerHTML = ccfSettings.noAvailableFields;
+					option.value = '';
+					conditionalFields.appendChild( option );
+					conditionalFields.disabled = true;
+				}
+			},
+
 			render: function() {
 				var context = {};
 				if ( this.model ) {
@@ -62,6 +103,8 @@
 				this.el.innerHTML = this.template( context );
 
 				wp.ccf.dispatcher.on( 'mainViewChange', this.saveChoice, this );
+
+				this.updateFields();
 
 				return this;
 			},
@@ -74,6 +117,85 @@
 				var choices = this.field.get( 'choices' );
 				if ( choices.length > 1 ) {
 					choices.remove( this.model );
+					this.destroy();
+					this.remove();
+				} else {
+					var inputs = this.el.querySelectorAll( '.choice-label, .choice-value' );
+					var selected = this.el.querySelectorAll( '.choice-selected' );
+
+					for ( var i = 0; i < inputs.length; i++ ) {
+						inputs[i].value = '';
+					}
+
+					selected[0].checked = false;
+				}
+			}
+		}
+	);
+
+	wp.ccf.views.FieldConditional = Backbone.View.extend(
+		{
+			template: wp.ccf.utils.template( 'ccf-field-conditional-template' ),
+			className: 'conditonal',
+
+			events: {
+				'click .add': 'triggerAdd',
+				'click .delete': 'triggerDelete',
+				'blur input': 'saveConditional',
+				'saveConditional': 'saveConditional'
+			},
+
+			initialize: function( options ) {
+				this.field = options.field;
+			},
+
+			destroy: function() {
+				wp.ccf.dispatcher.off( 'mainViewChange', this.saveConditional );
+				this.unbind();
+			},
+
+			saveConditional: function() {
+				// @todo: fix this ie8 hack
+				if ( this.el.innerHTML === '' ) {
+					return;
+				}
+
+				var label = this.el.querySelectorAll( '.choice-label' )[0].value;
+				var value = this.el.querySelectorAll( '.choice-value' )[0].value;
+
+				this.model.set( 'label', label );
+				this.model.set( 'value', value );
+
+				var selectedElement = this.el.querySelectorAll( '.choice-selected' )[0];
+				var selected = ( selectedElement.checked ) ? true : false;
+
+				this.model.set( 'selected', selected );
+
+				return this;
+
+			},
+
+			render: function() {
+				var context = {};
+				if ( this.model ) {
+					context.conditional = this.model.toJSON();
+				}
+
+				this.el.innerHTML = this.template( context );
+
+				wp.ccf.dispatcher.on( 'mainViewChange', this.saveConditional, this );
+
+				return this;
+			},
+
+			triggerAdd: function() {
+				this.field.get( 'conditionals' ).add( new wp.ccf.models.FieldConditional() );
+			},
+
+			triggerDelete: function() {
+				var conditionals = this.field.get( 'conditionals' );
+				if ( conditionals.length > 1 ) {
+					conditionals.remove( this.model );
 					this.destroy();
 					this.remove();
 				} else {
@@ -612,6 +734,18 @@
 				'change input[type="checkbox"]': 'saveField'
 			},
 
+			initialize: function() {
+				var conditionals = this.model.get( 'conditionals' );
+				this.listenTo( conditionals, 'add', this.addConditional );
+			},
+
+			addConditional: function( model ) {
+				var view = new wp.ccf.views.FieldConditional( { model: model, field: this.model, fieldCollection: this.collection } ).render();
+				var conditionals = this.el.querySelectorAll( '.conditionals' )[0];
+
+				conditionals.appendChild( view.el );
+			},
+
 			checkSlug: function() {
 				var slugSelection = this.el.querySelectorAll( '.field-slug');
 
@@ -648,10 +782,27 @@
 				this.unbind();
 			},
 
-			render: function() {
-				this.el.innerHTML = this.template( { field: this.model.toJSON() } );
+			render: function( startPanel ) {
+				var startPanel = ( startPanel ) ? startPanel : 'basic';
+
+				this.el.innerHTML = this.template( { field: this.model.toJSON(), startPanel: startPanel } );
 
 				this.checkSlug();
+
+				var conditionalsCollection = this.model.get( 'conditionals' );
+
+				var conditonals = this.el.querySelectorAll( '.conditionals' )[0];
+
+				if ( conditionalsCollection.length >= 1 ) {
+
+					conditionalsCollection.each( function( model ) {
+						var view = new wp.ccf.views.FieldConditional( { model: model, field: SELF.model } ).render();
+						conditionals.appendChild( view.el );
+					});
+				} else {
+					var conditional = new wp.ccf.models.FieldConditional();
+					conditionalsCollection.add( conditional );
+				}
 
 				return this;
 			}
@@ -679,7 +830,13 @@
 				this.model.set( 'placeholder', this.el.querySelectorAll( '.field-placeholder' )[0].value );
 				this.model.set( 'className', this.el.querySelectorAll( '.field-class-name' )[0].value );
 				this.model.set( 'required', ( this.el.querySelectorAll( '.field-required' )[0].value == 1 ) ? true : false  );
-				this.model.set( 'conditionals', ( this.el.querySelectorAll( '.field-conditonals' )[0].value == 1 ) ? true : false );
+
+				var oldConditionals = this.model.get( 'conditionals' );
+				this.model.set( 'conditionals', ( this.el.querySelectorAll( '.field-conditionals' )[0].value == 1 ) ? true : false );
+
+				if ( oldConditionals !== this.model.get( 'conditionals' ) ) {
+					this.render( 'advanced' );
+				}
 
 				return this;
 			}

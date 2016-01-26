@@ -545,7 +545,7 @@ class CCF_Form_Manager {
 		</script>
 
 		<script type="text/html" id="ccf-single-line-text-template">
-			<div class="accordion-section expanded">
+			<div class="accordion-section <# if ( 'basic' === startPanel ) { #>expanded<# } #>">
 				<a class="accordion-heading">Basic</a>
 				<div class="section-content">
 					<div>
@@ -573,7 +573,7 @@ class CCF_Form_Manager {
 					</div>
 				</div>
 			</div>
-			<div class="accordion-section">
+			<div class="accordion-section <# if ( 'advanced' === startPanel ) { #>expanded<# } #>">
 				<a class="accordion-heading"><?php esc_html_e( 'Advanced', 'custom-contact-forms' ); ?></a>
 				<div class="section-content">
 					<div>
@@ -588,9 +588,28 @@ class CCF_Form_Manager {
 						<label for="ccf-field-conditionals"><?php esc_html_e( 'Enable Conditional Logic:', 'custom-contact-forms' ); ?></label>
 						<select id="ccf-field-conditionals" class="field-conditionals">
 							<option value="0"><?php esc_html_e( 'No', 'custom-contact-forms' ); ?></option>
-							<option value="1" <# if ( field.required ) { #>selected="selected"<# } #>><?php esc_html_e( 'Yes', 'custom-contact-forms' ); ?></option>
+							<option value="1" <# if ( field.conditionals ) { #>selected="selected"<# } #>><?php esc_html_e( 'Yes', 'custom-contact-forms' ); ?></option>
 						</select>
 					</div>
+					<# if ( field.conditionals ) { #>
+						<div>
+							<select class="field-conditional-type">
+								<option value="hide"><?php esc_html_e( 'Hide', 'custom-contact-forms' ); ?></option>
+								<option <# if ( 'show' === field.conditionalType ) { #>selected="selected"<# } #> value="show"><?php esc_html_e( 'Show', 'custom-contact-forms' ); ?></option>
+							</select>
+
+							<?php esc_html_e( 'this field if', 'custom-contact-forms' ); ?>
+
+							<select class="field-conditional-fields-required">
+								<option value="all"><?php esc_html_e( 'All', 'custom-contact-forms' ); ?></option>
+								<option <# if ( 'any' === field.conditionalFieldsRequired ) { #>selected="selected"<# } #> value="any"><?php esc_html_e( 'Any', 'custom-contact-forms' ); ?></option>
+							</select>
+
+							<?php esc_html_e( 'of these conditions are true:', 'custom-contact-forms' ); ?>
+						</div>
+						<div class="conditonals">
+						</div>
+					<# } #>
 				</div>
 			</div>
 		</script>
@@ -1091,6 +1110,23 @@ class CCF_Form_Manager {
 			<input class="choice-selected" <# if ( choice.selected ) { #>checked<# } #> name="selected" type="checkbox" value="1">
 			<input class="choice-label" type="text" placeholder="<?php esc_html_e( 'Label', 'custom-contact-forms' ); ?>" value="{{ choice.label }}">
 			<input class="choice-value" type="text" placeholder="<?php esc_html_e( 'Value', 'custom-contact-forms' ); ?>" value="{{ choice.value }}">
+			<a aria-hidden="true" data-icon="&#xe605;" class="add"></a>
+			<a aria-hidden="true" data-icon="&#xe604;" class="delete"></a>
+		</script>
+
+		<script type="text/html" id="ccf-field-conditional-template">
+			<select class="conditional-field">
+			</select>
+
+			<select class="conditional-compare">
+				<option <# if ( 'is' === conditional.compare ) { #>selected<# } #> value="is"><?php esc_html_e( 'is', 'custom-contact-forms' ); ?></option>
+				<option <# if ( 'is-not' === conditional.compare ) { #>selected<# } #> value="is-not"><?php esc_html_e( 'is not', 'custom-contact-forms' ); ?></option>
+				<option <# if ( 'greater-than' === conditional.compare ) { #>selected<# } #> value="greater-than"><?php esc_html_e( 'greater than', 'custom-contact-forms' ); ?></option>
+				<option <# if ( 'less-than' === conditional.compare ) { #>selected<# } #> value="less-than"><?php esc_html_e( 'less than', 'custom-contact-forms' ); ?></option>
+				<option <# if ( 'contains' === conditional.compare ) { #>selected<# } #> value="contains"><?php esc_html_e( 'contains', 'custom-contact-forms' ); ?></option>
+			</select>
+			<input class="choice-value" type="text" value="{{ conditional.value }}">
+			
 			<a aria-hidden="true" data-icon="&#xe605;" class="add"></a>
 			<a aria-hidden="true" data-icon="&#xe604;" class="delete"></a>
 		</script>

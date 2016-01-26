@@ -112,9 +112,9 @@
 		}
 	);
 
-	wp.ccf.collections.FieldConditions = wp.ccf.collections.FieldConditions || Backbone.Collection.extend(
+	wp.ccf.collections.FieldConditionals = wp.ccf.collections.FieldConditionals || Backbone.Collection.extend(
 		{
-			model: wp.ccf.models.FieldCondition
+			model: wp.ccf.models.FieldConditional
 		}
 	);
 

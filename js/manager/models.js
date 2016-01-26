@@ -57,7 +57,7 @@
 		return this;
 	};
 
-	wp.ccf.models.FieldCondition = wp.ccf.models.FieldCondition || Backbone.Model.extend(
+	wp.ccf.models.FieldConditional = wp.ccf.models.FieldConditional || Backbone.Model.extend(
 		{
 			defaults: {
 				field: '',
@@ -429,12 +429,14 @@
 		{
 			idAttribute: 'id',
 
-			defaults: {
-				id: null,
-				conditionals: false,
-				conditionalType: 'show',
-				conditionalFieldsRequired: 'all',
-				conditionals: new wp.ccf.collections.FieldConditionals()
+			defaults: function() {
+				return {
+					id: null,
+					conditionals: false,
+					conditionalType: 'show',
+					conditionalFieldsRequired: 'all',
+					conditionals: new wp.ccf.collections.FieldConditionals()
+				};
 			},
 
 			set: _modelSet,
@@ -495,7 +497,7 @@
 					description: ''
 				};
 
-				return _.defaults( defaults, this.constructor.__super__.defaults );
+				return _.defaults( defaults, this.constructor.__super__.defaults() );
 			}
 		}
 	);
@@ -660,7 +662,7 @@
 					className: ''
 				};
 
-				return _.defaults( defaults, this.constructor.__super__.defaults );
+				return _.defaults( defaults, this.constructor.__super__.defaults() );
 			},
 
 			required: function() {
@@ -681,7 +683,7 @@
 					className: ''
 				};
 
-				return _.defaults( defaults, this.constructor.__super__.defaults );
+				return _.defaults( defaults, this.constructor.__super__.defaults() );
 			},
 
 			required: function() {
