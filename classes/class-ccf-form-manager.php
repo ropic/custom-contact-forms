@@ -607,7 +607,7 @@ class CCF_Form_Manager {
 
 							<?php esc_html_e( 'of these conditions are true:', 'custom-contact-forms' ); ?>
 						</div>
-						<div class="conditonals">
+						<div class="conditionals">
 						</div>
 					<# } #>
 				</div>
@@ -1121,11 +1121,11 @@ class CCF_Form_Manager {
 			<select class="conditional-compare">
 				<option <# if ( 'is' === conditional.compare ) { #>selected<# } #> value="is"><?php esc_html_e( 'is', 'custom-contact-forms' ); ?></option>
 				<option <# if ( 'is-not' === conditional.compare ) { #>selected<# } #> value="is-not"><?php esc_html_e( 'is not', 'custom-contact-forms' ); ?></option>
-				<option <# if ( 'greater-than' === conditional.compare ) { #>selected<# } #> value="greater-than"><?php esc_html_e( 'greater than', 'custom-contact-forms' ); ?></option>
-				<option <# if ( 'less-than' === conditional.compare ) { #>selected<# } #> value="less-than"><?php esc_html_e( 'less than', 'custom-contact-forms' ); ?></option>
+				<option <# if ( 'greater-than' === conditional.compare ) { #>selected<# } #> value=">"><?php esc_html_e( '>', 'custom-contact-forms' ); ?></option>
+				<option <# if ( 'less-than' === conditional.compare ) { #>selected<# } #> value="<"><?php esc_html_e( '<', 'custom-contact-forms' ); ?></option>
 				<option <# if ( 'contains' === conditional.compare ) { #>selected<# } #> value="contains"><?php esc_html_e( 'contains', 'custom-contact-forms' ); ?></option>
 			</select>
-			<input class="choice-value" type="text" value="{{ conditional.value }}">
+			<input class="conditional-value" type="text" value="{{ conditional.value }}">
 			
 			<a aria-hidden="true" data-icon="&#xe605;" class="add"></a>
 			<a aria-hidden="true" data-icon="&#xe604;" class="delete"></a>
@@ -1852,7 +1852,7 @@ class CCF_Form_Manager {
 				'specialFieldLabels' => $special_field_labels,
 				'maxFileSize' => floor( wp_max_upload_size() / 1000 / 1000 ),
 				'noEmailFields' => esc_html__( 'You have no email fields', 'custom-contact-forms' ),
-				'noAvailableFields' => esc_html__( 'You have no available fields', 'custom-contact-forms' ),
+				'noAvailableFields' => esc_html__( 'No available fields', 'custom-contact-forms' ),
 				'noNameFields' => esc_html__( 'You have no name fields', 'custom-contact-forms' ),
 				'noApplicableFields' => esc_html__( 'You have no applicable fields', 'custom-contact-forms' ),
 				'chooseFormField' => esc_html__( 'Choose a Form Field', 'custom-contact-forms' ),

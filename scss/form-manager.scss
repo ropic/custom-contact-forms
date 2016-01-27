@@ -654,6 +654,11 @@
 				margin-top: 5px;
 			}
 
+			.conditionals input[type="text"] {
+				width: 100px;
+				display: inline-block;
+			}
+
 			input[type="checkbox"] + label {
 				display: inline-block;
 				vertical-align: middle;

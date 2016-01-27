@@ -1212,47 +1212,6 @@
 
 			},
 
-			updateFields: function() {
-				var conditionalFields = this.el.querySelectorAll( '.conditional-field' )[0];
-				conditionalFields.innerHTML = '';
-				conditionalFields.disabled = false;
-
-				var fieldsAdded = 0;
-
-				var conditionalField = this.model.get( 'field' ),
-					option;
-
-				if ( this.collection.length >= 1 ) {
-					option = document.createElement( 'option' );
-					option.innerHTML = ccfSettings.chooseFormField;
-					option.value = '';
-
-					conditionalFields.appendChild( option );
-
-					this.collection.each( function( field ) {
-						option = document.createElement( 'option' );
-						option.innerHTML = field.get( 'slug' );
-						option.value = field.get( 'slug' );
-
-						if ( field.get( 'slug' ) === conditionalField ) {
-							option.selected = true;
-						}
-
-						conditionalFields.appendChild( option );
-
-						fieldsAdded++;
-					});
-				}
-
-				if ( 0 === fieldsAdded ) {
-					option = document.createElement( 'option' );
-					option.innerHTML = ccfSettings.noAvailableFields;
-					option.value = '';
-					conditionalFields.appendChild( option );
-					conditionalFields.disabled = true;
-				}
-			},
-
 			render: function() {
 				var context = {};
 				if ( this.model ) {
@@ -1262,8 +1221,6 @@
 				this.el.innerHTML = this.template( context );
 
 				wp.ccf.dispatcher.on( 'mainViewChange', this.saveChoice, this );
-
-				this.updateFields();
 
 				return this;
 			},
@@ -1295,17 +1252,19 @@
 	wp.ccf.views.FieldConditional = Backbone.View.extend(
 		{
 			template: wp.ccf.utils.template( 'ccf-field-conditional-template' ),
-			className: 'conditonal',
+			className: 'conditional',
 
 			events: {
 				'click .add': 'triggerAdd',
 				'click .delete': 'triggerDelete',
 				'blur input': 'saveConditional',
+				'change select': 'saveConditional',
 				'saveConditional': 'saveConditional'
 			},
 
 			initialize: function( options ) {
 				this.field = options.field;
+				this.fieldCollection = options.fieldCollection;
 			},
 
 			destroy: function() {
@@ -1319,19 +1278,60 @@
 					return;
 				}
 
-				var label = this.el.querySelectorAll( '.choice-label' )[0].value;
-				var value = this.el.querySelectorAll( '.choice-value' )[0].value;
+				var field = this.el.querySelectorAll( '.conditional-field' )[0].value;
+				var value = this.el.querySelectorAll( '.conditional-value' )[0].value;
+				var compare = this.el.querySelectorAll( '.conditional-compare' )[0].value;
 
-				this.model.set( 'label', label );
+				this.model.set( 'field', field );
 				this.model.set( 'value', value );
-
-				var selectedElement = this.el.querySelectorAll( '.choice-selected' )[0];
-				var selected = ( selectedElement.checked ) ? true : false;
-
-				this.model.set( 'selected', selected );
+				this.model.set( 'compare', compare );
 
 				return this;
 
+			},
+
+			updateFields: function() {
+				var conditionalFields = this.el.querySelectorAll( '.conditional-field' )[0];
+				conditionalFields.innerHTML = '';
+				conditionalFields.disabled = false;
+
+				var fieldsAdded = 0;
+
+				var conditionalField = this.model.get( 'field' ),
+					option;
+
+				if ( this.fieldCollection.length >= 1 ) {
+					option = document.createElement( 'option' );
+					option.innerHTML = ccfSettings.chooseFormField;
+					option.value = '';
+
+					conditionalFields.appendChild( option );
+
+					this.fieldCollection.each( function( field ) {
+						if ( this.field.get( 'slug' ) !== field.get( 'slug' ) ) {
+							option = document.createElement( 'option' );
+							option.innerHTML = field.get( 'slug' );
+							option.value = field.get( 'slug' );
+
+							if ( field.get( 'slug' ) === conditionalField ) {
+								option.selected = true;
+							}
+
+							conditionalFields.appendChild( option );
+
+							fieldsAdded++;
+						}
+					}, this );
+				}
+
+				if ( 0 === fieldsAdded ) {
+					conditionalFields.innerHTML = '';
+					option = document.createElement( 'option' );
+					option.innerHTML = ccfSettings.noAvailableFields;
+					option.value = '';
+					conditionalFields.appendChild( option );
+					conditionalFields.disabled = true;
+				}
 			},
 
 			render: function() {
@@ -1343,6 +1343,8 @@
 				this.el.innerHTML = this.template( context );
 
 				wp.ccf.dispatcher.on( 'mainViewChange', this.saveConditional, this );
+
+				this.updateFields();
 
 				return this;
 			},
@@ -1358,14 +1360,12 @@
 					this.destroy();
 					this.remove();
 				} else {
-					var inputs = this.el.querySelectorAll( '.choice-label, .choice-value' );
-					var selected = this.el.querySelectorAll( '.choice-selected' );
+					var value  = this.el.querySelectorAll( '.conditional-value' );
+					var field = this.el.querySelectorAll( '.conditional-field' );
 
-					for ( var i = 0; i < inputs.length; i++ ) {
-						inputs[i].value = '';
-					}
+					value[0].value = '';
+					field.value = '';
 
-					selected[0].checked = false;
 				}
 			}
 		}
@@ -1941,6 +1941,15 @@
 				this.unbind();
 			},
 
+			saveField: function() {
+				var conditionals = this.el.querySelectorAll( '.conditionals' )[0].querySelectorAll( '.conditional' );
+
+				_.each( conditionals, function( conditional ) {
+					$( conditional ).trigger( 'saveConditional' );
+				});
+
+			},
+
 			render: function( startPanel ) {
 				var startPanel = ( startPanel ) ? startPanel : 'basic';
 
@@ -1950,14 +1959,14 @@
 
 				var conditionalsCollection = this.model.get( 'conditionals' );
 
-				var conditonals = this.el.querySelectorAll( '.conditionals' )[0];
+				var conditionals = this.el.querySelectorAll( '.conditionals' )[0];
 
 				if ( conditionalsCollection.length >= 1 ) {
 
 					conditionalsCollection.each( function( model ) {
 						var view = new wp.ccf.views.FieldConditional( { model: model, field: SELF.model } ).render();
 						conditionals.appendChild( view.el );
-					});
+					} );
 				} else {
 					var conditional = new wp.ccf.models.FieldConditional();
 					conditionalsCollection.add( conditional );
@@ -1971,10 +1980,6 @@
 	wp.ccf.views.Fields['single-line-text'] = wp.ccf.views.Fields['single-line-text'] || wp.ccf.views.FieldBase.extend(
 		{
 			template: wp.ccf.utils.template( 'ccf-single-line-text-template' ),
-
-			initialize: function() {
-
-			},
 
 			saveField: function() {
 				// @todo: fix this ie8 hack
@@ -1997,6 +2002,8 @@
 					this.render( 'advanced' );
 				}
 
+				this.constructor.__super__.saveField.apply( this, arguments );
+
 				return this;
 			}
 		}
@@ -2005,10 +2012,6 @@
 	wp.ccf.views.Fields.file = wp.ccf.views.Fields.file || wp.ccf.views.FieldBase.extend(
 		{
 			template: wp.ccf.utils.template( 'ccf-file-template' ),
-
-			initialize: function() {
-
-			},
 
 			saveField: function() {
 				// @todo: fix this ie8 hack
@@ -2023,7 +2026,7 @@
 				this.model.set( 'required', ( this.el.querySelectorAll( '.field-required' )[0].value == 1 ) ? true : false  );
 				this.model.set( 'fileExtensions', this.el.querySelectorAll( '.field-file-extensions' )[0].value );
 				this.model.set( 'maxFileSize', this.el.querySelectorAll( '.field-max-file-size' )[0].value );
-				this.model.set( 'conditionals', ( this.el.querySelectorAll( '.field-conditonals' )[0].value == 1 ) ? true : false );
+				this.model.set( 'conditionals', ( this.el.querySelectorAll( '.field-conditionals' )[0].value == 1 ) ? true : false );
 
 				return this;
 			}
@@ -2033,10 +2036,6 @@
 	wp.ccf.views.Fields.recaptcha = wp.ccf.views.Fields.recaptcha || wp.ccf.views.FieldBase.extend(
 		{
 			template: wp.ccf.utils.template( 'ccf-recaptcha-template' ),
-
-			initialize: function() {
-
-			},
 
 			saveField: function() {
 				// @todo: fix this ie8 hack
@@ -2049,7 +2048,7 @@
 				this.model.set( 'siteKey', this.el.querySelectorAll( '.field-site-key' )[0].value );
 				this.model.set( 'secretKey', this.el.querySelectorAll( '.field-secret-key' )[0].value );
 				this.model.set( 'className', this.el.querySelectorAll( '.field-class-name' )[0].value );
-				this.model.set( 'conditionals', ( this.el.querySelectorAll( '.field-conditonals' )[0].value == 1 ) ? true : false );
+				this.model.set( 'conditionals', ( this.el.querySelectorAll( '.field-conditionals' )[0].value == 1 ) ? true : false );
 
 				return this;
 			}
@@ -2060,10 +2059,6 @@
 		{
 			template: wp.ccf.utils.template( 'ccf-section-header-template' ),
 
-			initialize: function() {
-
-			},
-
 			saveField: function() {
 				// @todo: fix this ie8 hack
 				if ( this.el.innerHTML === '' ) {
@@ -2073,7 +2068,7 @@
 				this.model.set( 'heading', this.el.querySelectorAll( '.field-heading' )[0].value );
 				this.model.set( 'subheading', this.el.querySelectorAll( '.field-subheading' )[0].value );
 				this.model.set( 'className', this.el.querySelectorAll( '.field-class-name' )[0].value );
-				this.model.set( 'conditionals', ( this.el.querySelectorAll( '.field-conditonals' )[0].value == 1 ) ? true : false );
+				this.model.set( 'conditionals', ( this.el.querySelectorAll( '.field-conditionals' )[0].value == 1 ) ? true : false );
 
 				return this;
 			}
@@ -2084,10 +2079,6 @@
 		{
 			template: wp.ccf.utils.template( 'ccf-html-template' ),
 
-			initialize: function() {
-
-			},
-
 			saveField: function() {
 				// @todo: fix this ie8 hack
 				if ( this.el.innerHTML === '' ) {
@@ -2096,7 +2087,7 @@
 
 				this.model.set( 'html', this.el.querySelectorAll( '.field-html' )[0].value );
 				this.model.set( 'className', this.el.querySelectorAll( '.field-class-name' )[0].value );
-				this.model.set( 'conditionals', ( this.el.querySelectorAll( '.field-conditonals' )[0].value == 1 ) ? true : false );
+				this.model.set( 'conditionals', ( this.el.querySelectorAll( '.field-conditionals' )[0].value == 1 ) ? true : false );
 
 				return this;
 			}
@@ -2120,7 +2111,7 @@
 				this.model.set( 'placeholder', this.el.querySelectorAll( '.field-placeholder' )[0].value );
 				this.model.set( 'className', this.el.querySelectorAll( '.field-class-name' )[0].value );
 				this.model.set( 'required', ( this.el.querySelectorAll( '.field-required' )[0].value == 1 ) ? true : false  );
-				this.model.set( 'conditionals', ( this.el.querySelectorAll( '.field-conditonals' )[0].value == 1 ) ? true : false );
+				this.model.set( 'conditionals', ( this.el.querySelectorAll( '.field-conditionals' )[0].value == 1 ) ? true : false );
 
 				return this;
 			}
@@ -2159,7 +2150,7 @@
 				this.model.set( 'slug', this.el.querySelectorAll( '.field-slug' )[0].value );
 				this.model.set( 'label', this.el.querySelectorAll( '.field-label' )[0].value );
 				this.model.set( 'description', this.el.querySelectorAll( '.field-description' )[0].value );
-				this.model.set( 'conditionals', ( this.el.querySelectorAll( '.field-conditonals' )[0].value == 1 ) ? true : false );
+				this.model.set( 'conditionals', ( this.el.querySelectorAll( '.field-conditionals' )[0].value == 1 ) ? true : false );
 
 				var value = this.el.querySelectorAll( '.field-value' );
 				if ( value.length > 0 ) {
@@ -2206,7 +2197,7 @@
 				this.model.set( 'description', this.el.querySelectorAll( '.field-description' )[0].value );
 				this.model.set( 'className', this.el.querySelectorAll( '.field-class-name' )[0].value );
 				this.model.set( 'required', ( this.el.querySelectorAll( '.field-required' )[0].value == 1 ) ? true : false  );
-				this.model.set( 'conditionals', ( this.el.querySelectorAll( '.field-conditonals' )[0].value == 1 ) ? true : false );
+				this.model.set( 'conditionals', ( this.el.querySelectorAll( '.field-conditionals' )[0].value == 1 ) ? true : false );
 
 				return this;
 			}
@@ -2230,7 +2221,7 @@
 				this.model.set( 'placeholder', this.el.querySelectorAll( '.field-placeholder' )[0].value );
 				this.model.set( 'className', this.el.querySelectorAll( '.field-class-name' )[0].value );
 				this.model.set( 'required', ( this.el.querySelectorAll( '.field-required' )[0].value == 1 ) ? true : false  );
-				this.model.set( 'conditionals', ( this.el.querySelectorAll( '.field-conditonals' )[0].value == 1 ) ? true : false );
+				this.model.set( 'conditionals', ( this.el.querySelectorAll( '.field-conditionals' )[0].value == 1 ) ? true : false );
 
 				return this;
 			}
@@ -2255,7 +2246,7 @@
 				this.model.set( 'phoneFormat', this.el.querySelectorAll( '.field-phone-format' )[0].value );
 				this.model.set( 'className', this.el.querySelectorAll( '.field-class-name' )[0].value );
 				this.model.set( 'required', ( this.el.querySelectorAll( '.field-required' )[0].value == 1 ) ? true : false  );
-				this.model.set( 'conditionals', ( this.el.querySelectorAll( '.field-conditonals' )[0].value == 1 ) ? true : false );
+				this.model.set( 'conditionals', ( this.el.querySelectorAll( '.field-conditionals' )[0].value == 1 ) ? true : false );
 
 				return this;
 			}
@@ -2278,7 +2269,7 @@
 				this.model.set( 'addressType', this.el.querySelectorAll( '.field-address-type' )[0].value );
 				this.model.set( 'className', this.el.querySelectorAll( '.field-class-name' )[0].value );
 				this.model.set( 'required', ( this.el.querySelectorAll( '.field-required' )[0].value == 1 ) ? true : false  );
-				this.model.set( 'conditionals', ( this.el.querySelectorAll( '.field-conditonals' )[0].value == 1 ) ? true : false );
+				this.model.set( 'conditionals', ( this.el.querySelectorAll( '.field-conditionals' )[0].value == 1 ) ? true : false );
 
 				return this;
 			}
@@ -2298,7 +2289,7 @@
 				this.model.set( 'slug', this.el.querySelectorAll( '.field-slug' )[0].value );
 				this.model.set( 'label', this.el.querySelectorAll( '.field-label' )[0].value );
 				this.model.set( 'description', this.el.querySelectorAll( '.field-description' )[0].value );
-				this.model.set( 'conditionals', ( this.el.querySelectorAll( '.field-conditonals' )[0].value == 1 ) ? true : false );
+				this.model.set( 'conditionals', ( this.el.querySelectorAll( '.field-conditionals' )[0].value == 1 ) ? true : false );
 
 				var value = this.el.querySelectorAll( '.field-value' );
 				if ( value.length ) {
@@ -2354,7 +2345,7 @@
 				this.model.set( 'description', this.el.querySelectorAll( '.field-description' )[0].value );
 				this.model.set( 'className', this.el.querySelectorAll( '.field-class-name' )[0].value );
 				this.model.set( 'required', ( this.el.querySelectorAll( '.field-required' )[0].value == 1 ) ? true : false  );
-				this.model.set( 'conditionals', ( this.el.querySelectorAll( '.field-conditonals' )[0].value == 1 ) ? true : false );
+				this.model.set( 'conditionals', ( this.el.querySelectorAll( '.field-conditionals' )[0].value == 1 ) ? true : false );
 
 
 				var choices = this.el.querySelectorAll( '.repeatable-choices' )[0].querySelectorAll( '.choice' );

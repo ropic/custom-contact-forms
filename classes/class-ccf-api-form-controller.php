@@ -310,6 +310,11 @@ class CCF_API_Form_Controller extends WP_REST_Controller {
 					$this->_create_and_map_choices( $choices, $field_id );
 				}
 
+				if ( isset( $field['conditionals'] ) ) {
+					$conditionals = ( empty( $field['conditionals'] ) ) ? array() : $field['conditionals'];
+					$this->_create_and_map_conditionals( $conditionals, $field_id );
+				}
+
 				$new_fields[] = $field_id;
 			}
 		}
@@ -354,6 +359,26 @@ class CCF_API_Form_Controller extends WP_REST_Controller {
 		}
 
 		update_post_meta( $form_id, 'ccf_form_notifications', $clean_notifications );
+	}
+
+	/**
+	 * Create/update field conditionals
+	 *
+	 * @param array $conditionals
+	 * @param int $field_id
+	 * @since 7.5
+	 */
+	public function _create_and_map_conditionals( $conditionals, $field_id ) {
+		// @Todo: better sanitization
+		$clean_conditionals = array();
+
+		for ( $index = 0; $index < count( $conditionals ); $index++ ) {
+			foreach ( $conditionals[$index] as $conditional_key => $conditional_value ) {
+				$clean_conditionals[$index][$conditional_key] = sanitize_text_field( $conditional_value );
+			}
+		}
+
+		update_post_meta( $field_id, 'ccf_attached_conditionals', $clean_conditionals );
 	}
 
 	/**
@@ -892,6 +917,22 @@ class CCF_API_Form_Controller extends WP_REST_Controller {
 							}
 
 							$field['choices'][] = $choice;
+						}
+					}
+				}
+
+				$conditionals = get_post_meta( $field_id, 'ccf_attached_conditionals' );
+
+				if ( ! empty( $conditionals ) ) {
+					$field['conditionals'] = array();
+
+					if ( ! empty( $conditionals[0] ) ) {
+						foreach ( $conditionals[0] as $conditional ) {
+							$field['conditionals'][] = array(
+								'field' => esc_attr( $conditional['field'] ),
+								'compare' => esc_attr( $conditional['compare'] ),
+								'value' => esc_html( $conditional['value'] ),
+							);
 						}
 					}
 				}
