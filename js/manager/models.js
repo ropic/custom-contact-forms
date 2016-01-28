@@ -432,7 +432,7 @@
 			defaults: function() {
 				return {
 					id: null,
-					conditionals: false,
+					conditionalsEnabled: false,
 					conditionalType: 'show',
 					conditionalFieldsRequired: 'all',
 					conditionals: new wp.ccf.collections.FieldConditionals()
@@ -446,7 +446,7 @@
 					var conditionals = [];
 
 					_.each( attributes.conditionals, function( conditional ) {
-						var conditionalModel = new wp.ccf.models.FieldCondition( conditional );
+						var conditionalModel = new wp.ccf.models.FieldConditional( conditional );
 						conditionalModel.decode();
 
 						conditionals.push( conditionalModel );

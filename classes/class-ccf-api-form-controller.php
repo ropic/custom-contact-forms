@@ -109,6 +109,18 @@ class CCF_API_Form_Controller extends WP_REST_Controller {
 				'sanitize' => 'sanitize_text_field',
 				'escape' => 'esc_html',
 			),
+			'conditionalsEnabled' => array(
+				'sanitize' => array( $this, 'boolval' ),
+				'escape' => array( $this, 'boolval' ),
+			),
+			'conditionalType' => array(
+				'sanitize' => 'sanitize_text_field',
+				'escape' => 'esc_html',
+			),
+			'conditionalFieldsRequired' => array(
+				'sanitize' => 'sanitize_text_field',
+				'escape' => 'esc_html',
+			),
 		) );
 
 		$this->choice_attribute_keys = apply_filters( 'ccf_choice_attributes', array(
