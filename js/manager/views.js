@@ -1216,10 +1216,12 @@
 
 			},
 
-			render: function() {
+			render: function( startPanel ) {
 				var SELF = this;
 
-				SELF.el.innerHTML = SELF.template( { field: SELF.model.toJSON() } );
+				startPanel = ( startPanel ) ? startPanel : 'basic';
+
+				SELF.el.innerHTML = SELF.template( { field: SELF.model.toJSON(), startPanel: startPanel } );
 
 				SELF.checkSlug();
 
@@ -1247,6 +1249,21 @@
 						$ui.item.trigger( 'sorted', $ui.item.index() );
 					}
 				});
+
+				var conditionalsCollection = this.model.get( 'conditionals' );
+
+				var conditionals = this.el.querySelectorAll( '.conditionals' )[0];
+
+				if ( conditionalsCollection.length >= 1 ) {
+
+					conditionalsCollection.each( function( model ) {
+						var view = new wp.ccf.views.FieldConditional( { model: model, field: this.model, fieldCollection: this.collection } ).render();
+						conditionals.appendChild( view.el );
+					}, this );
+				} else {
+					var conditional = new wp.ccf.models.FieldConditional();
+					conditionalsCollection.add( conditional );
+				}
 
 				return SELF;
 			}

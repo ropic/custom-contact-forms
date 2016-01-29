@@ -613,7 +613,7 @@ class CCF_Form_Manager {
 		</script>
 
 		<script type="text/html" id="ccf-file-template">
-			<div class="accordion-section expanded">
+			<div class="accordion-section <# if ( 'basic' === startPanel ) { #>expanded<# } #>">
 				<a class="accordion-heading">Basic</a>
 				<div class="section-content">
 					<div>
@@ -647,7 +647,7 @@ class CCF_Form_Manager {
 					</div>
 				</div>
 			</div>
-			<div class="accordion-section">
+			<div class="accordion-section <# if ( 'advanced' === startPanel ) { #>expanded<# } #>">
 				<a class="accordion-heading"><?php esc_html_e( 'Advanced', 'custom-contact-forms' ); ?></a>
 				<div class="section-content">
 					<div>
@@ -683,7 +683,7 @@ class CCF_Form_Manager {
 		</script>
 
 		<script type="text/html" id="ccf-recaptcha-template">
-			<div class="accordion-section expanded">
+			<div class="accordion-section <# if ( 'basic' === startPanel ) { #>expanded<# } #>">
 				<a class="accordion-heading">Basic</a>
 				<div class="section-content">
 					<p><?php _e( 'reCAPTCHA is a simple captcha service provided by Google. <a target="_blank" href="https://www.google.com/recaptcha/intro/index.html">Learn more</a>', 'custom-contact-forms' ); ?></p>
@@ -707,7 +707,7 @@ class CCF_Form_Manager {
 					</div>
 				</div>
 			</div>
-			<div class="accordion-section">
+			<div class="accordion-section <# if ( 'advanced' === startPanel ) { #>expanded<# } #>">
 				<a class="accordion-heading"><?php esc_html_e( 'Advanced', 'custom-contact-forms' ); ?></a>
 				<div class="section-content">
 					<div>
@@ -743,7 +743,7 @@ class CCF_Form_Manager {
 		</script>
 
 		<script type="text/html" id="ccf-website-template">
-			<div class="accordion-section expanded">
+			<div class="accordion-section <# if ( 'basic' === startPanel ) { #>expanded<# } #>">
 				<a class="accordion-heading">Basic</a>
 				<div class="section-content">
 					<div>
@@ -771,7 +771,7 @@ class CCF_Form_Manager {
 					</div>
 				</div>
 			</div>
-			<div class="accordion-section">
+			<div class="accordion-section <# if ( 'advanced' === startPanel ) { #>expanded<# } #>">
 				<a class="accordion-heading"><?php esc_html_e( 'Advanced', 'custom-contact-forms' ); ?></a>
 				<div class="section-content">
 					<div>
@@ -811,7 +811,7 @@ class CCF_Form_Manager {
 		</script>
 
 		<script type="text/html" id="ccf-html-template">
-			<div class="accordion-section expanded">
+			<div class="accordion-section <# if ( 'basic' === startPanel ) { #>expanded<# } #>">
 				<a class="accordion-heading"><?php esc_html_e( 'Basic', 'custom-contact-forms' ); ?></a>
 				<div class="section-content">
 					<div>
@@ -820,7 +820,7 @@ class CCF_Form_Manager {
 					</div>
 				</div>
 			</div>
-			<div class="accordion-section">
+			<div class="accordion-section <# if ( 'advanced' === startPanel ) { #>expanded<# } #>">
 				<a class="accordion-heading"><?php esc_html_e( 'Advanced', 'custom-contact-forms' ); ?></a>
 				<div class="section-content">
 					<div>
@@ -856,7 +856,7 @@ class CCF_Form_Manager {
 		</script>
 
 		<script type="text/html" id="ccf-section-header-template">
-			<div class="accordion-section expanded">
+			<div class="accordion-section <# if ( 'basic' === startPanel ) { #>expanded<# } #>">
 				<a class="accordion-heading"><?php esc_html_e( 'Basic', 'custom-contact-forms' ); ?></a>
 				<div class="section-content">
 					<div>
@@ -869,7 +869,7 @@ class CCF_Form_Manager {
 					</div>
 				</div>
 			</div>
-			<div class="accordion-section">
+			<div class="accordion-section <# if ( 'advanced' === startPanel ) { #>expanded<# } #>">
 				<a class="accordion-heading"><?php esc_html_e( 'Advanced', 'custom-contact-forms' ); ?></a>
 				<div class="section-content">
 					<div>
@@ -905,7 +905,7 @@ class CCF_Form_Manager {
 		</script>
 
 		<script type="text/html" id="ccf-paragraph-text-template">
-			<div class="accordion-section expanded">
+			<div class="accordion-section <# if ( 'basic' === startPanel ) { #>expanded<# } #>">
 				<a class="accordion-heading"><?php esc_html_e( 'Basic', 'custom-contact-forms' ); ?></a>
 				<div class="section-content">
 					<div>
@@ -933,7 +933,7 @@ class CCF_Form_Manager {
 					</div>
 				</div>
 			</div>
-			<div class="accordion-section">
+			<div class="accordion-section <# if ( 'advanced' === startPanel ) { #>expanded<# } #>">
 				<a class="accordion-heading"><?php esc_html_e( 'Advanced', 'custom-contact-forms' ); ?></a>
 				<div class="section-content">
 					<div>
@@ -973,7 +973,7 @@ class CCF_Form_Manager {
 		</script>
 
 		<script type="text/html" id="ccf-hidden-template">
-			<div class="accordion-section expanded">
+			<div class="accordion-section <# if ( 'basic' === startPanel ) { #>expanded<# } #>">
 				<a class="accordion-heading"><?php esc_html_e( 'Basic', 'custom-contact-forms' ); ?></a>
 				<div class="section-content">
 					<div>
@@ -986,7 +986,7 @@ class CCF_Form_Manager {
 					</div>
 				</div>
 			</div>
-			<div class="accordion-section">
+			<div class="accordion-section <# if ( 'advanced' === startPanel ) { #>expanded<# } #>">
 				<a class="accordion-heading"><?php esc_html_e( 'Advanced', 'custom-contact-forms' ); ?></a>
 				<div class="section-content">
 					<div>
@@ -1022,7 +1022,7 @@ class CCF_Form_Manager {
 		</script>
 
 		<script type="text/html" id="ccf-name-template">
-			<div class="accordion-section expanded">
+			<div class="accordion-section <# if ( 'basic' === startPanel ) { #>expanded<# } #>">
 				<a class="accordion-heading"><?php esc_html_e( 'Basic', 'custom-contact-forms' ); ?></a>
 				<div class="section-content">
 					<div>
@@ -1046,7 +1046,7 @@ class CCF_Form_Manager {
 					</div>
 				</div>
 			</div>
-			<div class="accordion-section">
+			<div class="accordion-section <# if ( 'advanced' === startPanel ) { #>expanded<# } #>">
 				<a class="accordion-heading"><?php esc_html_e( 'Advanced', 'custom-contact-forms' ); ?></a>
 				<div class="section-content">
 					<div>
@@ -1082,7 +1082,7 @@ class CCF_Form_Manager {
 		</script>
 
 		<script type="text/html" id="ccf-date-template">
-			<div class="accordion-section expanded">
+			<div class="accordion-section <# if ( 'basic' === startPanel ) { #>expanded<# } #>">
 				<a class="accordion-heading"><?php esc_html_e( 'Basic', 'custom-contact-forms' ); ?></a>
 				<div class="section-content">
 					<div>
@@ -1129,7 +1129,7 @@ class CCF_Form_Manager {
 					<# } #>
 				</div>
 			</div>
-			<div class="accordion-section">
+			<div class="accordion-section <# if ( 'advanced' === startPanel ) { #>expanded<# } #>">
 				<a class="accordion-heading"><?php esc_html_e( 'Advanced', 'custom-contact-forms' ); ?></a>
 				<div class="section-content">
 					<div>
@@ -1171,7 +1171,7 @@ class CCF_Form_Manager {
 		</script>
 
 		<script type="text/html" id="ccf-phone-template">
-			<div class="accordion-section expanded">
+			<div class="accordion-section <# if ( 'basic' === startPanel ) { #>expanded<# } #>">
 				<a class="accordion-heading"><?php esc_html_e( 'Basic', 'custom-contact-forms' ); ?></a>
 				<div class="section-content">
 					<div>
@@ -1206,7 +1206,7 @@ class CCF_Form_Manager {
 					</div>
 				</div>
 			</div>
-			<div class="accordion-section">
+			<div class="accordion-section <# if ( 'advanced' === startPanel ) { #>expanded<# } #>">
 				<a class="accordion-heading"><?php esc_html_e( 'Advanced', 'custom-contact-forms' ); ?></a>
 				<div class="section-content">
 					<div>
@@ -1246,7 +1246,7 @@ class CCF_Form_Manager {
 		</script>
 
 		<script type="text/html" id="ccf-address-template">
-			<div class="accordion-section expanded">
+			<div class="accordion-section <# if ( 'basic' === startPanel ) { #>expanded<# } #>">
 				<a class="accordion-heading"><?php esc_html_e( 'Basic', 'custom-contact-forms' ); ?></a>
 				<div class="section-content">
 					<div>
@@ -1277,7 +1277,7 @@ class CCF_Form_Manager {
 					</div>
 				</div>
 			</div>
-			<div class="accordion-section">
+			<div class="accordion-section <# if ( 'advanced' === startPanel ) { #>expanded<# } #>">
 				<a class="accordion-heading"><?php esc_html_e( 'Advanced', 'custom-contact-forms' ); ?></a>
 				<div class="section-content">
 					<div>
@@ -1313,7 +1313,7 @@ class CCF_Form_Manager {
 		</script>
 
 		<script type="text/html" id="ccf-email-template">
-			<div class="accordion-section expanded">
+			<div class="accordion-section <# if ( 'basic' === startPanel ) { #>expanded<# } #>">
 				<a class="accordion-heading"><?php esc_html_e( 'Basic', 'custom-contact-forms' ); ?></a>
 				<div class="section-content">
 					<div>
@@ -1350,7 +1350,7 @@ class CCF_Form_Manager {
 					</div>
 				</div>
 			</div>
-			<div class="accordion-section">
+			<div class="accordion-section <# if ( 'advanced' === startPanel ) { #>expanded<# } #>">
 				<a class="accordion-heading"><?php esc_html_e( 'Advanced', 'custom-contact-forms' ); ?></a>
 				<div class="section-content">
 					<div>
@@ -1418,7 +1418,7 @@ class CCF_Form_Manager {
 		</script>
 
 		<script type="text/html" id="ccf-dropdown-template">
-			<div class="accordion-section expanded">
+			<div class="accordion-section <# if ( 'basic' === startPanel ) { #>expanded<# } #>">
 				<a class="accordion-heading"><?php esc_html_e( 'Basic', 'custom-contact-forms' ); ?></a>
 				<div class="section-content">
 					<div>
@@ -1449,7 +1449,7 @@ class CCF_Form_Manager {
 					</div>
 				</div>
 			</div>
-			<div class="accordion-section">
+			<div class="accordion-section <# if ( 'advanced' === startPanel ) { #>expanded<# } #>">
 				<a class="accordion-heading"><?php esc_html_e( 'Advanced', 'custom-contact-forms' ); ?></a>
 				<div class="section-content">
 					<div>
@@ -1485,7 +1485,7 @@ class CCF_Form_Manager {
 		</script>
 
 		<script type="text/html" id="ccf-radio-template">
-			<div class="accordion-section expanded">
+			<div class="accordion-section <# if ( 'basic' === startPanel ) { #>expanded<# } #>">
 				<a class="accordion-heading"><?php esc_html_e( 'Basic', 'custom-contact-forms' ); ?></a>
 				<div class="section-content">
 					<div>
@@ -1516,7 +1516,7 @@ class CCF_Form_Manager {
 					</div>
 				</div>
 			</div>
-			<div class="accordion-section">
+			<div class="accordion-section <# if ( 'advanced' === startPanel ) { #>expanded<# } #>">
 				<a class="accordion-heading"><?php esc_html_e( 'Advanced', 'custom-contact-forms' ); ?></a>
 				<div class="section-content">
 					<div>
@@ -1552,7 +1552,7 @@ class CCF_Form_Manager {
 		</script>
 
 		<script type="text/html" id="ccf-checkboxes-template">
-			<div class="accordion-section expanded">
+			<div class="accordion-section <# if ( 'basic' === startPanel ) { #>expanded<# } #>">
 				<a class="accordion-heading"><?php esc_html_e( 'Basic', 'custom-contact-forms' ); ?></a>
 				<div class="section-content">
 					<div>
@@ -1583,7 +1583,7 @@ class CCF_Form_Manager {
 					</div>
 				</div>
 			</div>
-			<div class="accordion-section">
+			<div class="accordion-section <# if ( 'advanced' === startPanel ) { #>expanded<# } #>">
 				<a class="accordion-heading"><?php esc_html_e( 'Advanced', 'custom-contact-forms' ); ?></a>
 				<div class="section-content">
 					<div>
