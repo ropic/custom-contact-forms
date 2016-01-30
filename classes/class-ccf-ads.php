@@ -29,7 +29,6 @@ class CCF_Ads {
 				'method' => 'post',
 				'body' => array(
 					'EMAIL' => $_POST['email'],
-					'INTEREST' => $_POST['interest'],
 				)
 			));
 
