@@ -145,7 +145,6 @@ class CCF_Form_Manager {
 						<strong>Want free WP blogging tips, tutorials, and marketing tricks? </strong>
 						<input type="email" class="email-signup-field" placeholder="Email">
 						<button type="button" class="button signup-button">Sign me up!</button>
-						<button type="button" class="button not-interested-button">Not Interested</button>
 						<span class="signup-check">✓</span>
 						<span class="signup-x">&times;</span>
 					</div>
