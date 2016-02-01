@@ -23,13 +23,13 @@ class CCF_Ads {
 		if ( apply_filters( 'ccf_hide_ads', false ) ) {
 			return;
 		}
-		
+
 		if ( ! empty( $_POST['ccf_subscribe'] ) && ! empty( $_POST['email'] ) ) {
 			$request = wp_remote_request( 'http://taylorlovett.us8.list-manage.com/subscribe/post?u=66118f9a5b0ab0414e83f043a&amp;id=b4ed816a24', array(
 				'method' => 'post',
 				'body' => array(
 					'EMAIL' => $_POST['email'],
-				)
+				),
 			));
 
 			update_option( 'ccf_subscribed', 1 );

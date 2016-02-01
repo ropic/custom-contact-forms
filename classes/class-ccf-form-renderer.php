@@ -88,7 +88,7 @@ class CCF_Form_Renderer {
 			$js_path = '/build/js/form.min.js';
 		}
 
-		wp_enqueue_style('ccf-jquery-ui', '//ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/themes/smoothness/jquery-ui.css');
+		wp_enqueue_style( 'ccf-jquery-ui', '//ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/themes/smoothness/jquery-ui.css' );
 		wp_enqueue_script( 'ccf-google-recaptcha', '//www.google.com/recaptcha/api.js?ver=2&onload=ccfRecaptchaOnload&render=explicit', array(), CCF_VERSION, true );
 		wp_enqueue_style( 'ccf-form', plugins_url( $css_form_path, dirname( __FILE__ ) ), array(), CCF_VERSION );
 
@@ -178,7 +178,7 @@ class CCF_Form_Renderer {
 			</div>
 
 			<?php
-		} elseif ( ! empty( $_POST['ccf_form'] ) && ! empty( $_POST['form_id'] ) && $_POST['form_id'] == $form_id && empty( CCF_Form_Handler::factory()->errors_by_form[$form_id] ) ) {
+		} elseif ( ! empty( $_POST['ccf_form'] ) && ! empty( $_POST['form_id'] ) && $_POST['form_id'] == $form_id && empty( CCF_Form_Handler::factory()->errors_by_form[ $form_id ] ) ) {
 
 			$completion_message = get_post_meta( $form_id, 'ccf_form_completion_message', true );
 			?>
@@ -211,7 +211,8 @@ class CCF_Form_Renderer {
 					if ( ! empty( $field_conditionals ) ) {
 						$new_conditionals = array(
 							'conditionals' => array_map( 'esc_html', $field_conditionals ),
-							'conditionalType' => get_post_meta( $field_id, 'ccf_field_conditional_type', true ) );
+							'conditionalType' => get_post_meta( $field_id, 'ccf_field_conditional_type', true ),
+						);,
 							'conditionalFieldsRequired' => get_post_meta( $field_id, 'ccf_field_conditional_fields_required', true ) ),
 						);
 					}

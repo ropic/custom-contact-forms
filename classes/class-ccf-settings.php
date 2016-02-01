@@ -72,7 +72,6 @@ class CCF_Settings {
 			$restriction_classes = 'ccf-asset-loading-restrictions-wrap';
 		}
 
-
 		add_settings_section( 'asset-loading-restriction', 'Asset Loading Restriction', array( $this, 'asset_loading_restriction_summary' ), 'custom-contact-forms' );
 		add_settings_field( 'asset-loading-restriction-enable', esc_html__( 'Enable Asset Loading Restrictions', 'custom-contact-forms' ), array( $this, 'asset_loading_restriction_enable' ), 'custom-contact-forms', 'asset-loading-restriction' );
 		add_settings_field( 'asset-loading-restriction-choose', esc_html__( 'Restrict Asset Loading To', 'custom-contact-forms' ), array( $this, 'asset_loading_restriction_choose' ), 'custom-contact-forms', 'asset-loading-restriction', array( 'class' => $restriction_classes ) );
@@ -129,7 +128,8 @@ class CCF_Settings {
 						<span class="add">+</span>
 						<span class="delete">&times;</span>
 					</div>
-				<?php $i++; endforeach; else : ?>
+				<?php $i++;
+endforeach; else : ?>
 					<div class="asset">
 						<input name="ccf_settings[asset_loading_restrictions][0][location]" class="asset-location" type="text" placeholder="<?php esc_attr_e( 'URL or post ID', 'custom-contact-forms' ); ?>"> 
 						<?php esc_html_e( 'Restriction type:', 'custom-contact-forms' ); ?>
