@@ -197,10 +197,25 @@ class CCF_Form_Renderer {
 
 			$fields_html = '';
 
+			$conditionals = array();
+
 			foreach ( $fields as $field_id ) {
 				$field_id = (int) $field_id;
 
 				$type = esc_attr( get_post_meta( $field_id, 'ccf_field_type', true ) );
+				$conditionals_enabled = get_post_meta( $field_id, 'ccf_field_conditionalsEnabled', true ) );
+
+				if ( ! empty( $conditionals_enabled ) ) {
+					$field_conditionals = get_post_meta( $field_id, 'ccf_attached_conditionals', true );
+
+					if ( ! empty( $field_conditionals ) ) {
+						$new_conditionals = array(
+							'conditionals' => array_map( 'esc_html', $field_conditionals ),
+							'conditionalType' => get_post_meta( $field_id, 'ccf_field_conditional_type', true ) );
+							'conditionalFieldsRequired' => get_post_meta( $field_id, 'ccf_field_conditional_fields_required', true ) ),
+						);
+					}
+				}
 
 				if ( 'file' === $type ) {
 					$contains_file = true;

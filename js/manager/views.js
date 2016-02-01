@@ -147,17 +147,21 @@
 
 					this.fieldCollection.each( function( field ) {
 						if ( this.field.get( 'slug' ) !== field.get( 'slug' ) ) {
-							option = document.createElement( 'option' );
-							option.innerHTML = field.get( 'slug' );
-							option.value = field.get( 'slug' );
+							var type = field.get( 'type' );
 
-							if ( field.get( 'slug' ) === conditionalField ) {
-								option.selected = true;
+							if ( 'address' !== type && 'date' !== type && 'name' !== type && 'file' !== type && 'recaptcha' !== type && 'section-header' !== type && 'html' !== type ) {
+								option = document.createElement( 'option' );
+								option.innerHTML = field.get( 'slug' );
+								option.value = field.get( 'slug' );
+
+								if ( field.get( 'slug' ) === conditionalField ) {
+									option.selected = true;
+								}
+
+								conditionalFields.appendChild( option );
+
+								fieldsAdded++;
 							}
-
-							conditionalFields.appendChild( option );
-
-							fieldsAdded++;
 						}
 					}, this );
 				}
