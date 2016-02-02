@@ -27,11 +27,11 @@ class CCF_Settings {
 	 */
 	public function action_admin_enqueue_scripts() {
 		if ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) {
-			$css_path = '/build/css/settings.css';
-			$js_path = '/js/settings.js';
+			$css_path = '/assets/build/css/settings.css';
+			$js_path = '/assets/js/settings.js';
 		} else {
-			$css_path = '/build/css/settings.min.css';
-			$js_path = '/build/js/settings.min.js';
+			$css_path = '/assets/build/css/settings.min.css';
+			$js_path = '/assets/build/js/settings.min.js';
 		}
 		wp_enqueue_style( 'ccf-settings', plugins_url( $css_path, dirname( __FILE__ ) ), array(), CCF_VERSION );
 		wp_enqueue_script( 'ccf-settings', plugins_url( $js_path, dirname( __FILE__ ) ), array( 'jquery' ), CCF_VERSION, true );

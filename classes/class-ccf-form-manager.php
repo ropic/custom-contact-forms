@@ -1616,7 +1616,7 @@ class CCF_Form_Manager {
 		</script>
 
 		<script type="text/html" id="ccf-single-line-text-preview-template">
-			<label>{{ field.label }} <# if ( field.required ) { #><span>*</span><# } #></label>
+			<label>{{ field.label }} <# if ( field.required ) { #><span class="required">*</span><# } #> <# if ( field.conditionalsEnabled ) { #><span class="conditionals-enabled">if</span><# } #></label>
 			<input disabled type="text" placeholder="{{ field.placeholder }}" value="{{ field.value }}">
 			<# if ( field.description ) { #>
 				<div class="field-description">{{ field.description }}</div>
@@ -1624,7 +1624,7 @@ class CCF_Form_Manager {
 		</script>
 
 		<script type="text/html" id="ccf-file-preview-template">
-			<label>{{ field.label }} <# if ( field.required ) { #><span>*</span><# } #></label>
+			<label>{{ field.label }} <# if ( field.required ) { #><span class="required">*</span><# } #> <# if ( field.conditionalsEnabled ) { #><span class="conditionals-enabled">if</span><# } #></label>
 			<input disabled type="file" placeholder="{{ field.placeholder }}" value="{{ field.value }}">
 			<div class="field-description">
 				<# if ( field.fileExtensions ) {
@@ -1642,7 +1642,7 @@ class CCF_Form_Manager {
 		</script>
 
 		<script type="text/html" id="ccf-recaptcha-preview-template">
-			<label>{{ field.label }} <# if ( field.required ) { #><span>*</span><# } #></label>
+			<label>{{ field.label }} <# if ( field.required ) { #><span class="required">*</span><# } #> <# if ( field.conditionalsEnabled ) { #><span class="conditionals-enabled">if</span><# } #></label>
 			<img class="recaptcha-preview-img" src="<?php echo plugins_url( 'img/recaptcha.png', dirname( __FILE__ ) ); ?>">
 			<# if ( field.description ) { #>
 				<div class="field-description">{{ field.description }}</div>
@@ -1650,7 +1650,7 @@ class CCF_Form_Manager {
 		</script>
 
 		<script type="text/html" id="ccf-paragraph-text-preview-template">
-			<label>{{ field.label }} <# if ( field.required ) { #><span>*</span><# } #></label>
+			<label>{{ field.label }} <# if ( field.required ) { #><span class="required">*</span><# } #> <# if ( field.conditionalsEnabled ) { #><span class="conditionals-enabled">if</span><# } #></label>
 			<textarea placeholder="{{ field.placeholder }}" disabled>{{ field.value }}</textarea>
 			<# if ( field.description ) { #>
 				<div class="field-description">{{ field.description }}</div>
@@ -1658,7 +1658,7 @@ class CCF_Form_Manager {
 		</script>
 
 		<script type="text/html" id="ccf-dropdown-preview-template">
-			<label>{{ field.label }} <# if ( field.required ) { #><span>*</span><# } #></label>
+			<label>{{ field.label }} <# if ( field.required ) { #><span class="required">*</span><# } #> <# if ( field.conditionalsEnabled ) { #><span class="conditionals-enabled">if</span><# } #></label>
 			<select>
 				<# if ( field.choices.length === 0 || ( field.choices.length === 1 && ! field.choices.at( 0 ).get( 'label' ) && ! field.choices.at( 0 ).get( 'value' ) ) ) { #>
 					<option><?php esc_html_e( 'An example choice', 'custom-contact-forms' ); ?></option>
@@ -1674,7 +1674,7 @@ class CCF_Form_Manager {
 		</script>
 
 		<script type="text/html" id="ccf-radio-preview-template">
-			<label>{{ field.label }} <# if ( field.required ) { #><span>*</span><# } #></label>
+			<label>{{ field.label }} <# if ( field.required ) { #><span class="required">*</span><# } #> <# if ( field.conditionalsEnabled ) { #><span class="conditionals-enabled">if</span><# } #></label>
 			<# if ( field.choices.length === 0 || ( field.choices.length === 1 && ! field.choices.at( 0 ).get( 'label' ) && ! field.choices.at( 0 ).get( 'value' ) ) ) { #>
 				<div>
 					<input type="radio" value="1" checked="checked"> <label><?php esc_html_e( 'An example choice', 'custom-contact-forms' ); ?></label>
@@ -1692,7 +1692,7 @@ class CCF_Form_Manager {
 		</script>
 
 		<script type="text/html" id="ccf-checkboxes-preview-template">
-			<label>{{ field.label }} <# if ( field.required ) { #><span>*</span><# } #></label>
+			<label>{{ field.label }} <# if ( field.required ) { #><span class="required">*</span><# } #> <# if ( field.conditionalsEnabled ) { #><span class="conditionals-enabled">if</span><# } #></label>
 			<# if ( field.choices.length === 0 || ( field.choices.length === 1 && ! field.choices.at( 0 ).get( 'label' ) && ! field.choices.at( 0 ).get( 'value' ) ) ) { #>
 				<div>
 					<input type="checkbox" value="1" checked="checked"> <label><?php esc_html_e( 'An example choice', 'custom-contact-forms' ); ?></label>
@@ -1719,13 +1719,13 @@ class CCF_Form_Manager {
 
 		<script type="text/html" id="ccf-section-header-preview-template">
 			<div class="heading">
-				<# if ( field.heading ) { #>{{ field.heading }}<# } else { #><?php esc_html_e( 'Section Heading', 'custom-contact-forms' ); ?><# } #>
+				<# if ( field.heading ) { #>{{ field.heading }}<# } else { #><?php esc_html_e( 'Section Heading', 'custom-contact-forms' ); ?><# } #> <# if ( field.conditionalsEnabled ) { #><span class="conditionals-enabled">if</span><# } #>
 			</div>
 			<div class="subheading"><# if ( field.subheading ) { #>{{ field.subheading }}<# } else { #><?php esc_html_e( 'This is the sub-heading text.', 'custom-contact-forms' ); ?><# } #></div>
 		</script>
 
 		<script type="text/html" id="ccf-name-preview-template">
-			<label>{{ field.label }} <# if ( field.required ) { #><span>*</span><# } #></label>
+			<label>{{ field.label }} <# if ( field.required ) { #><span class="required">*</span><# } #> <# if ( field.conditionalsEnabled ) { #><span class="conditionals-enabled">if</span><# } #></label>
 			<div class="left">
 				<input type="text">
 				<label class="sub-label"><?php esc_html_e( 'First', 'custom-contact-forms' ); ?></label>
@@ -1740,7 +1740,7 @@ class CCF_Form_Manager {
 		</script>
 
 		<script type="text/html" id="ccf-date-preview-template">
-			<label>{{ field.label }} <# if ( field.required ) { #><span>*</span><# } #></label>
+			<label>{{ field.label }} <# if ( field.required ) { #><span class="required">*</span><# } #> <# if ( field.conditionalsEnabled ) { #><span class="conditionals-enabled">if</span><# } #></label>
 			<# if ( field.showDate && ! field.showTime ) { #>
 				<input value="{{ field.value }}" class="ccf-datepicker" disabled type="text">
 			<# } else if ( ! field.showDate && field.showTime ) { #>
@@ -1788,7 +1788,7 @@ class CCF_Form_Manager {
 		</script>
 
 		<script type="text/html" id="ccf-address-preview-template">
-			<label>{{ field.label }} <# if ( field.required ) { #><span>*</span><# } #></label>
+			<label>{{ field.label }} <# if ( field.required ) { #><span class="required">*</span><# } #> <# if ( field.conditionalsEnabled ) { #><span class="conditionals-enabled">if</span><# } #></label>
 			<# if ( field.addressType === 'us' ) { #>
 				<div class="full">
 					<input type="text">
@@ -1850,7 +1850,7 @@ class CCF_Form_Manager {
 		</script>
 
 		<script type="text/html" id="ccf-email-preview-template">
-			<label>{{ field.label }} <# if ( field.required ) { #><span>*</span><# } #></label>
+			<label>{{ field.label }} <# if ( field.required ) { #><span class="required">*</span><# } #> <# if ( field.conditionalsEnabled ) { #><span class="conditionals-enabled">if</span><# } #></label>
 			<# if ( ! field.emailConfirmation ) { #>
 				<input placeholder="<# if ( field.placeholder ) { #>{{ field.placeholder }}<# } else { #><?php esc_html_e( 'email@example.com', 'custom-contact-forms' ); ?><# } #>" disabled type="text" value="{{ field.value }}">
 			<# } else { #>
@@ -1869,7 +1869,7 @@ class CCF_Form_Manager {
 		</script>
 
 		<script type="text/html" id="ccf-website-preview-template">
-			<label>{{ field.label }} <# if ( field.required ) { #><span>*</span><# } #></label>
+			<label>{{ field.label }} <# if ( field.required ) { #><span class="required">*</span><# } #> <# if ( field.conditionalsEnabled ) { #><span class="conditionals-enabled">if</span><# } #></label>
 			<input placeholder="<# if ( field.placeholder ) { #>{{ field.placeholder }}<# } else { #>http://<# } #>" disabled type="text" value="{{ field.value }}">
 			<# if ( field.description ) { #>
 				<div class="field-description">{{ field.description }}</div>
@@ -1877,7 +1877,7 @@ class CCF_Form_Manager {
 		</script>
 
 		<script type="text/html" id="ccf-phone-preview-template">
-			<label>{{ field.label }} <# if ( field.required ) { #><span>*</span><# } #></label>
+			<label>{{ field.label }} <# if ( field.required ) { #><span class="required">*</span><# } #> <# if ( field.conditionalsEnabled ) { #><span class="conditionals-enabled">if</span><# } #></label>
 			<input placeholder="<# if ( field.placeholder ) { #>{{ field.placeholder }}<# } else if ( 'us' === field.phoneFormat ) { #>(301) 101-8976<# } #>" disabled type="text" value="{{ field.value }}">
 			<# if ( field.description ) { #>
 				<div class="field-description">{{ field.description }}</div>
@@ -2136,13 +2136,13 @@ class CCF_Form_Manager {
 
 		if ( 'post.php' == $pagenow || 'post-new.php' == $pagenow ) {
 			if ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) {
-				$js_manager_path = '/build/js/form-manager.js';
-				$js_mce_path = '/js/form-mce.js';
-				$css_path = '/build/css/form-manager.css';
+				$js_manager_path = '/assets/build/js/form-manager.js';
+				$js_mce_path = '/assets/js/form-mce.js';
+				$css_path = '/assets/build/css/form-manager.css';
 			} else {
-				$js_manager_path = '/build/js/form-manager.min.js';
-				$js_mce_path = '/build/js/form-mce.min.js';
-				$css_path = '/build/css/form-manager.min.css';
+				$js_manager_path = '/assets/build/js/form-manager.min.js';
+				$js_mce_path = '/assets/build/js/form-mce.min.js';
+				$css_path = '/assets/build/css/form-manager.min.css';
 			}
 
 			$field_labels = apply_filters( 'ccf_field_labels', array(
@@ -2173,7 +2173,7 @@ class CCF_Form_Manager {
 			wp_register_script( 'moment', plugins_url( '/bower_components/moment/moment.js', dirname( __FILE__ ) ), array(), CCF_VERSION );
 
 			if ( ! wp_script_is( 'wp-api', 'registered' ) ) {
-				wp_register_script( 'wp-api', plugins_url( '/vendor/wp-api/wp-api/wp-api.js', dirname( __FILE__ ) ), array(), CCF_VERSION );
+				wp_register_script( 'wp-api', plugins_url( '/wp-api/wp-api.js', dirname( __FILE__ ) ), array(), CCF_VERSION );
 			}
 
 			$site_url_parsed = parse_url( site_url() );

@@ -81,11 +81,11 @@ class CCF_Form_Renderer {
 		}
 
 		if ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) {
-			$css_form_path = '/build/css/form.css';
-			$js_path = '/js/form.js';
+			$css_form_path = '/assets/build/css/form.css';
+			$js_path = '/assets/js/form.js';
 		} else {
-			$css_form_path = '/build/css/form.min.css';
-			$js_path = '/build/js/form.min.js';
+			$css_form_path = '/assets/build/css/form.min.css';
+			$js_path = '/assets/build/js/form.min.js';
 		}
 
 		wp_enqueue_style( 'ccf-jquery-ui', '//ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/themes/smoothness/jquery-ui.css' );
@@ -203,18 +203,21 @@ class CCF_Form_Renderer {
 				$field_id = (int) $field_id;
 
 				$type = esc_attr( get_post_meta( $field_id, 'ccf_field_type', true ) );
-				$conditionals_enabled = get_post_meta( $field_id, 'ccf_field_conditionalsEnabled', true ) );
+				$slug = get_post_meta( $field_id, 'ccf_field_slug', true );
+				$conditionals_enabled = get_post_meta( $field_id, 'ccf_field_conditionalsEnabled', true );
 
 				if ( ! empty( $conditionals_enabled ) ) {
+					// Todo: escaping?
 					$field_conditionals = get_post_meta( $field_id, 'ccf_attached_conditionals', true );
 
 					if ( ! empty( $field_conditionals ) ) {
 						$new_conditionals = array(
-							'conditionals' => array_map( 'esc_html', $field_conditionals ),
-							'conditionalType' => get_post_meta( $field_id, 'ccf_field_conditional_type', true ),
-						);,
-							'conditionalFieldsRequired' => get_post_meta( $field_id, 'ccf_field_conditional_fields_required', true ) ),
+							'conditions' => $field_conditionals,
+							'conditionalType' => get_post_meta( $field_id, 'ccf_field_conditionalType', true ),
+							'conditionalFieldsRequired' => get_post_meta( $field_id, 'ccf_field_conditionalFieldsRequired', true ),
 						);
+
+						$conditionals[$slug] = $new_conditionals;
 					}
 				}
 
@@ -252,6 +255,13 @@ class CCF_Form_Renderer {
 						<input type="submit" class="btn btn-primary ccf-submit-button" value="<?php echo esc_attr( get_post_meta( $form_id, 'ccf_form_buttonText', true ) ); ?>">
 						<img class="loading-img" src="<?php echo esc_url( site_url( '/wp-admin/images/wpspin_light.gif' ) ); ?>">
 					</div>
+
+					<script type="text/javascript">
+					window.wp = window.wp || {};
+					wp.ccf = wp.ccf || {};
+					wp.ccf.conditionals = wp.ccf.conditionals || [];
+					wp.ccf.conditionals[<?php echo (int) $form_id; ?>] = <?php echo wp_json_encode( $conditionals ); ?>;
+					</script>
 
 					<input type="hidden" name="form_id" value="<?php echo (int) $form_id; ?>">
 					<input type="hidden" name="form_page" value="<?php echo esc_url( untrailingslashit( site_url() ) . $_SERVER['REQUEST_URI'] ); ?>">

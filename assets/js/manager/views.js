@@ -149,7 +149,7 @@
 						if ( this.field.get( 'slug' ) !== field.get( 'slug' ) ) {
 							var type = field.get( 'type' );
 
-							if ( 'address' !== type && 'date' !== type && 'name' !== type && 'file' !== type && 'recaptcha' !== type && 'section-header' !== type && 'html' !== type ) {
+							if ( 'address' !== type && 'checkboxes' !== type && 'date' !== type && 'name' !== type && 'file' !== type && 'recaptcha' !== type && 'section-header' !== type && 'html' !== type ) {
 								option = document.createElement( 'option' );
 								option.innerHTML = field.get( 'slug' );
 								option.value = field.get( 'slug' );

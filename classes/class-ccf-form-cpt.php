@@ -460,19 +460,19 @@ class CCF_Form_CPT {
 	 */
 	public function action_admin_enqueue_scripts() {
 		if ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) {
-			$admin_css_path = '/build/css/admin.css';
-			$form_cpt_css_path = '/build/css/form-cpt.css';
-			$form_table_css_path = '/build/css/form-table.css';
-			$form_cpt_preview_js_path = '/js/form-cpt-preview.js';
-			$mce_css_path = '/build/css/form-mce.css';
+			$admin_css_path = '/assets/build/css/admin.css';
+			$form_cpt_css_path = '/assets/build/css/form-cpt.css';
+			$form_table_css_path = '/assets/build/css/form-table.css';
+			$form_cpt_preview_js_path = '/assets/js/form-cpt-preview.js';
+			$mce_css_path = '/assets/build/css/form-mce.css';
 		} else {
-			$admin_css_path = '/build/css/admin.min.css';
-			$form_cpt_css_path = '/build/css/form-cpt.min.css';
-			$form_table_css_path = '/build/css/form-table.min.css';
-			$form_cpt_preview_js_path = '/build/js/form-cpt-preview.min.js';
-			$mce_css_path = '/build/css/form-mce.min.css';
+			$admin_css_path = '/assets/build/css/admin.min.css';
+			$form_cpt_css_path = '/assets/build/css/form-cpt.min.css';
+			$form_table_css_path = '/assets/build/css/form-table.min.css';
+			$form_cpt_preview_js_path = '/assets/build/js/form-cpt-preview.min.js';
+			$mce_css_path = '/assets/build/css/form-mce.min.css';
 		}
-		wp_enqueue_style( 'ccf-admin', plugins_url( $admin_css_path, dirname( __FILE__ ) ) );
+		wp_enqueue_style( 'ccf-admin', plugins_url( $admin_css_path, dirname( __FILE__ ) ), array(), CCF_VERSION );
 
 		global $pagenow;
 
@@ -481,12 +481,12 @@ class CCF_Form_CPT {
 
 			add_thickbox();
 
-			wp_enqueue_style( 'ccf-form-mce', plugins_url( $mce_css_path, dirname( __FILE__ ) ) );
-			wp_enqueue_style( 'ccf-form-cpt', plugins_url( $form_cpt_css_path, dirname( __FILE__ ) ) );
+			wp_enqueue_style( 'ccf-form-mce', plugins_url( $mce_css_path, dirname( __FILE__ ) ), array(), CCF_VERSION );
+			wp_enqueue_style( 'ccf-form-cpt', plugins_url( $form_cpt_css_path, dirname( __FILE__ ) ), array(), CCF_VERSION );
 
-			wp_enqueue_script( 'ccf-form-cpt-preview', plugins_url( $form_cpt_preview_js_path, dirname( __FILE__ ) ), array( 'jquery', 'backbone', 'ccf-form-manager' ), '1.0', true );
+			wp_enqueue_script( 'ccf-form-cpt-preview', plugins_url( $form_cpt_preview_js_path, dirname( __FILE__ ) ), array( 'jquery', 'backbone', 'ccf-form-manager' ), CCF_VERSION, true );
 		} elseif ( 'edit.php' === $pagenow && 'ccf_form' === get_post_type() ) {
-			wp_enqueue_style( 'ccf-form-table', plugins_url( $form_table_css_path, dirname( __FILE__ ) ) );
+			wp_enqueue_style( 'ccf-form-table', plugins_url( $form_table_css_path, dirname( __FILE__ ) ), array(), CCF_VERSION );
 		}
 	}
 
