@@ -33,9 +33,9 @@ class CCF_Form_Manager {
 		}
 
 		if ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) {
-			$css_path = '/build/css/form-mce.css';
+			$css_path = '/assets/build/css/form-mce.css';
 		} else {
-			$css_path = '/build/css/form-mce.min.css';
+			$css_path = '/assets/build/css/form-mce.min.css';
 		}
 
 		$css .= ', ' . plugins_url( $css_path, dirname( __FILE__ ) );
